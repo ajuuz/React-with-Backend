@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 const Header = () => {
   return (
-    <div className='px-16 py-4 bg-blue-400'>
+    <div className='px-16 py-4 bg-slate-400'>
       <ul className='flex justify-between'>
         <div className='flex  justify-around '>
         <Link to='/'><li className='font-extrabold font-serif text-xl'>Auth App</li></Link>
