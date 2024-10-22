@@ -52,7 +52,7 @@ const AuthComponenet = ({ auth }) => {
   );
 
   return (
-    <div className="AuthComponent-outerContainer h-[100vh] w-[100%] bg-blue-300 flex justify-center items-center">
+    <div className="AuthComponent-outerContainer h-[92vh] w-[100%] bg-blue-300 flex justify-center items-center">
       <div className="AuthComponent-innerContainer  md:flex  rounded-xl font-semibold shadow-2xl">
         {/* first div */}
         <div className="p-5 text-center flex justify-center items-center  rounded-t-xl md:rounded-s-xl md:rounded-tr-none bg-blue-400">

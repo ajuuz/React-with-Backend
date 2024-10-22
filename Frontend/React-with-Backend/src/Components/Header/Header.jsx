@@ -1,30 +1,21 @@
-import React from "react";
-import Link from "react-router-dom";
+import React from 'react'
+import { Link } from 'react-router-dom'
 const Header = () => {
   return (
-    <div className="p-4 bg-blue-400">
-      <ul className="flex justify-between">
-        <div className="flex w-[20%] justify-around ">
-          <Link to="/">
-            <li className="font-extrabold font-serif text-xl">Auth App</li>
-          </Link>
-          <Link to="/">
-            <li className="font-semibold">About</li>
-          </Link>
+    <div className='px-16 py-4 bg-blue-400'>
+      <ul className='flex justify-between'>
+        <div className='flex  justify-around '>
+        <Link to='/'><li className='font-extrabold font-serif text-xl'>Auth App</li></Link>
         </div>
-
-        <div className="flex w-[20%] justify-between">
-          <Link to="/">
-            <li className="font-semibold">SignUp</li>
-          </Link>
-          <Link to="/">
-            <li className="font-semibold">Login</li>
-          </Link>
-          <li className="font-semibold"></li>
+        <div className='flex gap-10'>
+        <Link to='/about'><li className='font-semibold'>About</li></Link>
+        <Link to='/auth/user/signup'><li className='font-semibold'>SignUp</li></Link>
+        <Link to='/auth/user/login'><li className='font-semibold'>Login</li></Link>
+       
         </div>
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
