@@ -1,41 +1,41 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserSignUp = () => {
-    const [formData,setFormData] = useState({})
-    const [error,setError] = useState(false);
-    const [loading,setLoading] = useState(false);
+  const [formData, setFormData] = useState({});
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
 
-    const handleChange=(e)=>{
-        setFormData({
-            ...formData,
-            [e.target.id]:e.target.value
-        })
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+    setLoading(true);
+    setError(false);
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Set content type to JSON
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    console.log(data);
+    setLoading(false);
+    if (data.success === false) {
+      setError(true);
+      return;
     }
+    navigate('/auth/user/signin')
+  };
 
-    const handleSubmit =async (e) => {
-        e.preventDefault();
-        console.log(formData)
-        setLoading(true);
-        setError(false);
-            const res= await fetch('/api/auth/signup',{
-                method:'POST',
-                headers:{
-                    'Content-Type': 'application/json', // Set content type to JSON
-                },
-                body:JSON.stringify(formData)
-             });
-            const data = await res.json();
-            console.log(data);
-            setLoading(false);
-            if(data.success===false)
-                {
-                    setError(true)
-                    return;
-                }
-        }
-        
-   
   return (
     <div>
       <div className="p-3 max-w-lg mx-auto">
@@ -76,15 +76,22 @@ const UserSignUp = () => {
             className="bg-slate-100 p-3 rounded-lg"
             onChange={handleChange}
           />
-          <button disabled={loading}  className="bg-slate-700 text-white rounded-lg uppercase hover:bg-opacity-95 p-3 disabled:bg-opacity-80">
-            {loading ?"loading...":"Sign Up"}
-            </button>
+          <button
+            disabled={loading}
+            className="bg-slate-700 text-white rounded-lg uppercase hover:bg-opacity-95 p-3 disabled:bg-opacity-80"
+          >
+            {loading ? "loading..." : "Sign Up"}
+          </button>
         </form>
         <div className="flex gap-2 mt-5">
-        <p>Have an Account ?</p>
-        <Link to='auth/user/signin'><span className="text-blue-500">Sign In</span></Link>
+          <p>Have an Account ?</p>
+          <Link to="/auth/user/signin">
+            <span className="text-blue-500">Sign In</span>
+          </Link>
         </div>
-        <p className="text-red-500 font-bold mt-3 text-center">{error?"Something went wrong":""}</p>
+        <p className="text-red-500 font-bold mt-3 text-center">
+          {error ? "Something went wrong" : ""}
+        </p>
       </div>
     </div>
   );
