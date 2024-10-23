@@ -1,10 +1,21 @@
 import React, { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
+
+// Redux - toolkit use
+import { useSelector,useDispatch } from "react-redux";
+import { signInStart,signInSuccess,signInFailure } from "../../../redux/user/userSlice";
+
 const UserSignIn = () => {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // accessing the redux state initialize selector
+  const {loading,error} = useSelector((state)=>state.user)
+  // for navigation
+  
   const navigate = useNavigate();
+  
+  //initializing dispatch
+  const dispatch = useDispatch();
+
 
   const handleChange = (e) => {
     setFormData({
@@ -16,8 +27,9 @@ const UserSignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-    setLoading(true);
-    setError(false);
+    // dispatch siginStart start loading
+    dispatch(signInStart())
+    try{
     const res = await fetch("/api/auth/signin", {
       method: "POST",
       headers: {
@@ -27,12 +39,19 @@ const UserSignIn = () => {
     });
     const data = await res.json();
     console.log(data);
-    setLoading(false);
+    
     if (data.success === false) {
-      setError(true);
+        
+      dispatch(signInFailure(data.message));
       return;
     }
+    dispatch(signInSuccess(data))
     navigate('/')
+  }
+  catch(error){
+    dispatch(signInFailure(data.message));
+      return;
+  }
   };
 
   return (
@@ -69,7 +88,7 @@ const UserSignIn = () => {
           </Link>
         </div>
         <p className="text-red-500 font-bold mt-3 text-center">
-          {error ? "Something went wrong" : ""}
+          {error ? error : ""}
         </p>
       </div>
     </div>

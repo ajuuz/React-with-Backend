@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const UserSignUp = () => {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
 
@@ -30,7 +30,7 @@ const UserSignUp = () => {
     console.log(data);
     setLoading(false);
     if (data.success === false) {
-      setError(true);
+      setError(data.message);
       return;
     }
     navigate('/auth/user/signin')
@@ -90,7 +90,7 @@ const UserSignUp = () => {
           </Link>
         </div>
         <p className="text-red-500 font-bold mt-3 text-center">
-          {error ? "Something went wrong" : ""}
+          {error ? error : ""}
         </p>
       </div>
     </div>

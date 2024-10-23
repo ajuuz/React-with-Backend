@@ -20,6 +20,11 @@ exports.signup=async (req,res,next)=>{
     }
     // catch error if email,username should be unique
     catch(err){
+        if(err.code===11000)
+        {
+            const duplicatedField = Object.keys(err.keyValue)[0];
+            return next(errorHandler(409,`${duplicatedField} already exists`))
+        }
         next(err)
     }
 }
@@ -41,10 +46,10 @@ exports.singin = async (req,res,next)=>{
         // token creation
         const token = jwt.sign({id:validUser._id},process.env.JWT_SECRET);
         const {password:hashedPassword,...rest} = validUser._doc;
-        const expiryDate = new Date(Date.now() + 3600000);
+        
         // setting token in the cookie
         res
-        .cookie('access_token',token,{httpOnly:true,expires:expiryDate})
+        .cookie('access_token',token,{httpOnly:true,maxAge: 3600000})
         .status(200)
         .json(rest)
     }
