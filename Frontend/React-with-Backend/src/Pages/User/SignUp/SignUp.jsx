@@ -14,6 +14,10 @@ const UserSignUp = () => {
     });
   };
 
+  const handleFileChange=()=>{
+
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
@@ -31,9 +35,12 @@ const UserSignUp = () => {
     setLoading(false);
     if (data.success === false) {
       setError(data.message);
+      setTimeout(()=>{
+        setError(null)
+      },3000);
       return;
     }
-    navigate('/auth/user/signin')
+    navigate('/user/signin')
   };
 
   return (
@@ -76,6 +83,12 @@ const UserSignUp = () => {
             className="bg-slate-100 p-3 rounded-lg"
             onChange={handleChange}
           />
+          <input type="file" 
+          id='profilePicture'
+          accept="image/*"
+          onChange={handleFileChange}
+          className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-200'
+          />
           <button
             disabled={loading}
             className="bg-slate-700 text-white rounded-lg uppercase hover:bg-opacity-95 p-3 disabled:bg-opacity-80"
@@ -85,7 +98,7 @@ const UserSignUp = () => {
         </form>
         <div className="flex gap-2 mt-5">
           <p>Have an Account ?</p>
-          <Link to="/auth/user/signin">
+          <Link to="/user/signin">
             <span className="text-blue-500">Sign In</span>
           </Link>
         </div>

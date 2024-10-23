@@ -3,12 +3,14 @@ import { Link,useNavigate } from "react-router-dom";
 
 // Redux - toolkit use
 import { useSelector,useDispatch } from "react-redux";
-import { signInStart,signInSuccess,signInFailure } from "../../../redux/user/userSlice";
+import { signInSuccess } from "../../../redux/user/userSlice";
 
 const UserSignIn = () => {
   const [formData, setFormData] = useState({});
-  // accessing the redux state initialize selector
-  const {loading,error} = useSelector((state)=>state.user)
+  
+  // for setting loading when signing and error if invalid
+  const [loading,setLoading]=useState(false);
+  const [error,setError] = useState(false);
   // for navigation
   
   const navigate = useNavigate();
@@ -28,7 +30,8 @@ const UserSignIn = () => {
     e.preventDefault();
     console.log(formData);
     // dispatch siginStart start loading
-    dispatch(signInStart())
+    setLoading(true);
+    setError(false);
     try{
     const res = await fetch("/api/user/signin", {
       method: "POST",
@@ -39,17 +42,20 @@ const UserSignIn = () => {
     });
     const data = await res.json();
     console.log(data);
-    
+    setLoading(false);
     if (data.success === false) {
         
-      dispatch(signInFailure(data.message));
+      setError(data.message);
+      setTimeout(()=>{
+        setError(null)
+      },5000)
       return;
     }
     dispatch(signInSuccess(data))
     navigate('/')
   }
   catch(error){
-    dispatch(signInFailure(data.message));
+    setError(error.message);
       return;
   }
   };
@@ -83,7 +89,7 @@ const UserSignIn = () => {
         </form>
         <div className="flex gap-2 mt-5">
           <p>Dont have an Account ?</p>
-          <Link to="/auth/user/signup">
+          <Link to="/user/signup">
             <span className="text-blue-500">Sign Up</span>
           </Link>
         </div>
