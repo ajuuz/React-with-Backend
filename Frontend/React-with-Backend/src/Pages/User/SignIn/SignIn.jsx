@@ -30,7 +30,7 @@ const UserSignIn = () => {
     // dispatch siginStart start loading
     dispatch(signInStart())
     try{
-    const res = await fetch("/api/auth/signin", {
+    const res = await fetch("/api/user/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json", // Set content type to JSON

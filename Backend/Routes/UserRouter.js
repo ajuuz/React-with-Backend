@@ -1,8 +1,10 @@
 const express = require('express');
 const UserController = require('../Controllers/UserController');
-const User = require('../Models/Schema');
 const router = express.Router();
 
-router.get('/mes',UserController.mes)
+router.post('/signup',UserController.signup)
+router.post('/signin',UserController.singin)
+
+
 
 module.exports = router;

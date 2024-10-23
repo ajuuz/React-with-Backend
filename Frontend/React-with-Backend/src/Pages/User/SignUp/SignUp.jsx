@@ -19,7 +19,7 @@ const UserSignUp = () => {
     console.log(formData);
     setLoading(true);
     setError(false);
-    const res = await fetch("/api/auth/signup", {
+    const res = await fetch("/api/user/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json", // Set content type to JSON
