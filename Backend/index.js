@@ -27,6 +27,8 @@ app.use(express.urlencoded({extended:true}))
 // static
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+
+
 app.use('/api/user',UserRouter)
 
 app.use((err,req,res,next)=>{

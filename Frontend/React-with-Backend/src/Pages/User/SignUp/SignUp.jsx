@@ -76,7 +76,7 @@ const UserSignUp = () => {
           }, 3000);
           return;
         }
-        navigate("/user/signin");
+        navigate("/user/signin",{state:data.message});
       }
     } catch (error) {
       setLoading(false);

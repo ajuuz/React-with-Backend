@@ -16,7 +16,7 @@ exports.signup=async (req,res,next)=>{
     const newUser = new User({name,email,phone,username,password:hashedPassword,imagePath});
     try{
         await newUser.save();
-        res.status(201).json({message:"User created successfully"})
+        res.status(201).json({message:`${name}'s account created successfully`})
     }
     // catch error if email,username should be unique
     catch(err){
@@ -44,8 +44,9 @@ exports.singin = async (req,res,next)=>{
         if(!validPassword) return next(errorHandler(401,'wrong credentials'))
         
         // token creation
+        console.log(validUser._doc)
         const token = jwt.sign({id:validUser._id},process.env.JWT_SECRET);
-        const {password:hashedPassword,...rest} = validUser._doc;
+        const {password:hashedPassword,phone,imagePath,createdAt,updatedAt,...rest} = validUser._doc;
         
         // setting token in the cookie
         res
@@ -54,6 +55,7 @@ exports.singin = async (req,res,next)=>{
         .json(rest)
     }
     catch(err){
+        console.log("here works ", err)
         next(err);
     }
 }
