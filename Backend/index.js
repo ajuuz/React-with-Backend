@@ -6,7 +6,7 @@ const app = express();
 const mongoose = require('mongoose');
 
 const UserRouter = require('./Routes/UserRouter')
-
+const path = require('path')
 
 // configuring PORT
 const PORT =  process.env.PORT|| 3000;
@@ -23,6 +23,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/mern-auth')
 // to parse the data coming from URL
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
+
+// static
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api/user',UserRouter)
 

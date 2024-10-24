@@ -5,7 +5,9 @@ const UserSignUp = () => {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+
+  const [image, setImage] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -14,8 +16,32 @@ const UserSignUp = () => {
     });
   };
 
-  const handleFileChange=()=>{
+  const handleImageChange = (e) => {
+    // console.log(e.target.files)
+    setImage(e.target.files[0]);
+  };
 
+  async function uploadImage() {
+    const formData = new FormData();
+    formData.append("image", image);
+
+    try {
+      const res = await fetch("/api/user/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (res.ok) {
+        console.log(data.message);
+        return { success: true, imagePath: data.filePath };
+      } else {
+        console.error("Image upload failed:", data.error);
+        return { success: false, error: data.message };
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return { success: false, error: "Image upload failed" };
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -23,24 +49,39 @@ const UserSignUp = () => {
     console.log(formData);
     setLoading(true);
     setError(false);
-    const res = await fetch("/api/user/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json", // Set content type to JSON
-      },
-      body: JSON.stringify(formData),
-    });
-    const data = await res.json();
-    console.log(data);
-    setLoading(false);
-    if (data.success === false) {
-      setError(data.message);
-      setTimeout(()=>{
-        setError(null)
-      },3000);
-      return;
+    try {
+      if (image) {
+        const imageUploadResult = await uploadImage();
+        if (!imageUploadResult.success) {
+          console.log(imageUploadResult.error);
+          setError(imageUploadResult.error);
+          return;
+        }
+        console.log(imageUploadResult.imagePath);
+
+        const res = await fetch("/api/user/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json", // Set content type to JSON
+          },
+          body: JSON.stringify({...formData,imagePath:imageUploadResult.imagePath}),
+        });
+        const data = await res.json();
+        console.log(data);
+        setLoading(false);
+        if (data.success === false) {
+          setError(data.message);
+          setTimeout(() => {
+            setError(null);
+          }, 3000);
+          return;
+        }
+        navigate("/user/signin");
+      }
+    } catch (error) {
+      setLoading(false);
+      setError(error.message);
     }
-    navigate('/user/signin')
   };
 
   return (
@@ -83,11 +124,12 @@ const UserSignUp = () => {
             className="bg-slate-100 p-3 rounded-lg"
             onChange={handleChange}
           />
-          <input type="file" 
-          id='profilePicture'
-          accept="image/*"
-          onChange={handleFileChange}
-          className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-200'
+          <input
+            type="file"
+            id="profilePicture"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-200"
           />
           <button
             disabled={loading}

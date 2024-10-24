@@ -5,15 +5,15 @@ const User = require('../Models/Schema.js')
 const bcryptjs = require('bcryptjs');
 const {errorHandler} = require('../utils/error.js');
 const jwt = require('jsonwebtoken');
-
+const path=require('node:path')
 
 exports.signup=async (req,res,next)=>{ 
-    const {name,email,phone,username,password} = req.body;
+    const {name,email,phone,username,password,imagePath} = req.body;
     console.log(name,email,phone,username,password);
     // hashing the password
     const hashedPassword = bcryptjs.hashSync(password,10);
     // saving the User
-    const newUser = new User({name,email,phone,username,password:hashedPassword});
+    const newUser = new User({name,email,phone,username,password:hashedPassword,imagePath});
     try{
         await newUser.save();
         res.status(201).json({message:"User created successfully"})
@@ -59,4 +59,20 @@ exports.singin = async (req,res,next)=>{
 }
 
 
-
+exports.ImageUploads = (req,res)=>{
+    try{
+        
+        if(!req.file)
+        {
+            return res.status(400).json({message:'No file uploaded'});
+        }
+        
+        res.status(200).json({
+            message: 'Image uploaded successfully',
+            filePath:  path.basename(req.file.path)  // Return file path to client
+        });
+    }
+    catch(error){
+        res.status(500).json({message:'Image upload failed',error:error.message})
+    }
+}

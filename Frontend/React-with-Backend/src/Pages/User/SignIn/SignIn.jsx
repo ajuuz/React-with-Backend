@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
 
 // Redux - toolkit use
-import { useSelector,useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signInSuccess } from "../../../redux/user/userSlice";
 
 const UserSignIn = () => {
