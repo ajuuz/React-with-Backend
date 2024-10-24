@@ -13,7 +13,7 @@ import About from './Pages/About/About';
 import UserSignIn from './Pages/User/SignIn/SignIn';
 import UserSignUp from './Pages/User/SignUp/SignUp';
 import AdminSignIn from './Pages/Admin/SignIn';
-
+import UserProfile from './Pages/User/UserProfile/UserProfile';
 
 const App = () => {
   return (
@@ -23,6 +23,7 @@ const App = () => {
         <Route path='about' element={<About/>}/>
         <Route path='user/signin' element={<UserSignIn/>}/>
         <Route path='user/signup' element={<UserSignUp/>}/>
+        <Route path='user/profile' element={<UserProfile/>}/>
         <Route path='admin/signin' element={<AdminSignIn/>}/>
       </Routes>
     </Router>

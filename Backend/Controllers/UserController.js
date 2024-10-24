@@ -78,3 +78,17 @@ exports.ImageUploads = (req,res)=>{
         res.status(500).json({message:'Image upload failed',error:error.message})
     }
 }
+
+
+exports.getuser =async (req,res)=>{
+    const id = req.params.id;
+    try{
+        console.log("getuserWorking")
+        if(!id) return res.status(400).json({message:'No user found'});
+        const currentUser = await User.findOne({_id:id});
+        res.status(200).json(currentUser)
+    }
+    catch(error){
+
+    }
+}
