@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 dotenv.config()
 
-const User = require('../Models/Schema.js')
+const {User,Admin} = require('../Models/Schema.js')
 const bcryptjs = require('bcryptjs');
 const {errorHandler} = require('../utils/error.js');
 const jwt = require('jsonwebtoken');

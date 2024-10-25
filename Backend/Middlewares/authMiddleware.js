@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const User = require('../Models/Schema');
+const {User,Admin} = require('../Models/Schema');
 
 exports.verifyUser = async (req,res,next)=>{
     const token = req.cookies.access_token

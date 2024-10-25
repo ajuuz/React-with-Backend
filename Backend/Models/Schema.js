@@ -29,6 +29,18 @@ const userSchema = new mongoose.Schema({
     }
 },{timestamps:true});
 
-const User = mongoose.model('User',userSchema);
+const adminSchema = new mongoose.Schema({
+    email:{
+        type:String,
+        unique:true,
+        required:true
+    },
+    password:{
+        type:String,
+        required:true
+    }
+})
 
-module.exports = User;
+const User = mongoose.model('User',userSchema);
+const Admin = mongoose.model('Admin',adminSchema)
+module.exports = {User,Admin};

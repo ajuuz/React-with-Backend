@@ -6,7 +6,8 @@ const app = express();
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
-const UserRouter = require('./Routes/UserRouter')
+const UserRouter = require('./Routes/UserRouter');
+const AdminRouter = require('./Routes/AdminRouter')
 const path = require('path')
 
 // configuring PORT
@@ -30,7 +31,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 
-app.use('/api/user',UserRouter)
+app.use('/api/user',UserRouter);
+app.use('/api/admin',AdminRouter)
 
 app.use((err,req,res,next)=>{
     const statusCode = err.statusCode || 500;
