@@ -83,12 +83,62 @@ exports.ImageUploads = (req,res)=>{
 exports.getuser =async (req,res)=>{
     const id = req.params.id;
     try{
-        console.log("getuserWorking")
+       
         if(!id) return res.status(400).json({message:'No user found'});
         const currentUser = await User.findOne({_id:id});
         res.status(200).json(currentUser)
     }
     catch(error){
+        console.log(error)
+    }
+}
 
+
+exports.edituser =async (req,res)=>{
+    const id = req.params.id;
+    const key=req.params.key;
+    const value= req.body.edittedFieldData;
+    try{
+      const updatedUser=await User.updateOne({_id:id},{$set:{[key]:value}});
+      console.log(updatedUser);
+      res.status(200).json({message:`${key} updated successfully`})
+    }
+    catch(error){
+        if(error.code===11000)
+        {
+            res.status(400).json({message:`${value} is already in use`})
+        }
+    }
+}
+
+exports.passwordcheck =async (req,res,next)=>{
+ 
+    const {currentPwd,newPwd} = req.body;
+    const id= req.params.id
+    try{
+        const user = await User.findOne({_id:id})
+        const validPassword = bcryptjs.compareSync(currentPwd,user.password);
+        if(!validPassword) return next(errorHandler(401,"enter your current password"))
+        const hashedPassword = bcryptjs.hashSync(newPwd,10);
+        await User.updateOne({_id:id},{$set:{password:hashedPassword}})
+        res.status(200).json({message:"password updated successfully"})
+    }
+    catch(error){
+        console.log(error.message);
+        res.status(500).json({message:error.message})
+    }
+}
+
+
+exports.editimage =async (req,res)=>{
+    const id= req.params.id;
+    const imagePath = req.body.imagePath;
+    try{
+        const updateImage = await User.updateOne({_id:id},{$set:{imagePath:imagePath}})
+        console.log(updateImage)
+        res.status(200).json({message:"image updated successfully"})
+    }
+    catch(error){
+        console.log("error catched in image edit")
     }
 }

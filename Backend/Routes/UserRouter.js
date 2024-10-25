@@ -7,5 +7,7 @@ router.post('/signup',UserController.signup)
 router.post('/signin',UserController.singin)
 router.post('/upload',upload.single('image'),UserController.ImageUploads)
 router.get('/getuser/:id',UserController.getuser)
-
+router.post('/edituser/:id/:key',UserController.edituser)
+router.post('/passwordchange/:id',UserController.passwordcheck);
+router.post('/editimage/:id',UserController.editimage)
 module.exports = router;
