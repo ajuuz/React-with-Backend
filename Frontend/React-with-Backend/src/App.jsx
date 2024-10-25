@@ -14,16 +14,22 @@ import UserSignIn from './Pages/User/SignIn/SignIn';
 import UserSignUp from './Pages/User/SignUp/SignUp';
 import AdminSignIn from './Pages/Admin/SignIn';
 import UserProfile from './Pages/User/UserProfile/UserProfile';
-
+import UserLoginAuth from './Components/Private/UserLoginAuth';
+import UserAuth from './Components/Private/userAuth';
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path='about' element={<About/>}/>
-        <Route path='user/signin' element={<UserSignIn/>}/>
-        <Route path='user/signup' element={<UserSignUp/>}/>
-        <Route path='user/profile' element={<UserProfile/>}/>
+      {/* user sign in and sign up */}
+        <Route path='user/signin' element={<UserLoginAuth><UserSignIn/></UserLoginAuth>}/>
+        <Route path='user/signup' element={<UserLoginAuth><UserSignUp/></UserLoginAuth>}/>
+
+        {/* user after signin */}
+        <Route path='/' element={<UserAuth><Home/></UserAuth>}/>
+        <Route path='about' element={<UserAuth><About/></UserAuth>}/>
+        <Route path='user/profile' element={<UserAuth><UserProfile/></UserAuth>}/>
+
+        {/* admin sign in */}
         <Route path='admin/signin' element={<AdminSignIn/>}/>
       </Routes>
     </Router>

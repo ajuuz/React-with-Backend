@@ -142,3 +142,8 @@ exports.editimage =async (req,res)=>{
         console.log("error catched in image edit")
     }
 }
+
+exports.logout=(req,res)=>{
+    res.clearCookie('access_token')
+    res.status(200).json({message:"logout successfull"})
+}

@@ -9,5 +9,6 @@ router.post('/upload',upload.single('image'),UserController.ImageUploads)
 router.get('/getuser/:id',UserController.getuser)
 router.post('/edituser/:id/:key',UserController.edituser)
 router.post('/passwordchange/:id',UserController.passwordcheck);
-router.post('/editimage/:id',UserController.editimage)
+router.post('/editimage/:id',UserController.editimage);
+router.get('/logout',UserController.logout)
 module.exports = router;
