@@ -4,7 +4,8 @@ dotenv.config()
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 const UserRouter = require('./Routes/UserRouter')
 const path = require('path')
 

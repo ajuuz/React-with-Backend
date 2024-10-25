@@ -9,7 +9,7 @@ const path=require('node:path')
 
 exports.signup=async (req,res,next)=>{ 
     const {name,email,phone,username,password,imagePath} = req.body;
-    console.log(name,email,phone,username,password);
+   
     // hashing the password
     const hashedPassword = bcryptjs.hashSync(password,10);
     // saving the User
@@ -32,7 +32,7 @@ exports.signup=async (req,res,next)=>{
 
 exports.singin = async (req,res,next)=>{
     const {email,password} = req.body;
-    console.log(email,password);
+   
     try{
         // user fetch from the db
         const validUser = await User.findOne({email:email});
@@ -44,7 +44,7 @@ exports.singin = async (req,res,next)=>{
         if(!validPassword) return next(errorHandler(401,'wrong credentials'))
         
         // token creation
-        console.log(validUser._doc)
+        
         const token = jwt.sign({id:validUser._id},process.env.JWT_SECRET);
         const {password:hashedPassword,phone,imagePath,createdAt,updatedAt,...rest} = validUser._doc;
         
@@ -55,7 +55,7 @@ exports.singin = async (req,res,next)=>{
         .json(rest)
     }
     catch(err){
-        console.log("here works ", err)
+        
         next(err);
     }
 }
@@ -81,6 +81,7 @@ exports.ImageUploads = (req,res)=>{
 
 
 exports.getuser =async (req,res)=>{
+    
     const id = req.params.id;
     try{
        
@@ -89,7 +90,7 @@ exports.getuser =async (req,res)=>{
         res.status(200).json(currentUser)
     }
     catch(error){
-        console.log(error)
+        console.log("error in getting user in profile page"+error)
     }
 }
 
@@ -124,7 +125,7 @@ exports.passwordcheck =async (req,res,next)=>{
         res.status(200).json({message:"password updated successfully"})
     }
     catch(error){
-        console.log(error.message);
+        console.log("error in password change"+error.message);
         res.status(500).json({message:error.message})
     }
 }

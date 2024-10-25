@@ -16,6 +16,7 @@ import AdminSignIn from './Pages/Admin/SignIn';
 import UserProfile from './Pages/User/UserProfile/UserProfile';
 import UserLoginAuth from './Components/Private/UserLoginAuth';
 import UserAuth from './Components/Private/userAuth';
+import NotFound from './Pages/NotFound/NotFound';
 const App = () => {
   return (
     <Router>
@@ -31,6 +32,8 @@ const App = () => {
 
         {/* admin sign in */}
         <Route path='admin/signin' element={<AdminSignIn/>}/>
+
+        <Route path='*' element={<NotFound/>}/>
       </Routes>
     </Router>
   )
