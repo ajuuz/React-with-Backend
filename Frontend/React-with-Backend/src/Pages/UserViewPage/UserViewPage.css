@@ -1,0 +1,81 @@
+.user-detail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+  
+}
+
+.user-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #007bff;
+  margin-bottom: 20px;
+}
+
+.user-info {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-name {
+  font-size: 2em;
+  margin: 0.5em 0;
+  color: #333;
+}
+
+.user-email,
+.user-phone,
+.user-address,
+.user-bio {
+  color: #555;
+  margin: 0.5em 0;
+  font-size: 1.1em;
+}
+
+
+
+
+.button-container {
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 0 10px;
+    transition: background-color 0.3s;
+}
+
+.go-back {
+    background-color: #6c757d; /* Gray color */
+    color: white;
+}
+
+.go-back:hover {
+    background-color: #5a6268; /* Darker gray on hover */
+}
+
+.edit {
+    background-color: #007bff; /* Blue color */
+    color: white;
+}
+
+.edit:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

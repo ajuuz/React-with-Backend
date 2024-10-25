@@ -13,10 +13,12 @@ import About from './Pages/About/About';
 import UserSignIn from './Pages/User/SignIn/SignIn';
 import UserSignUp from './Pages/User/SignUp/SignUp';
 import AdminSignIn from './Pages/Admin/AdminSignIn/AdminSignIn';
+import AdminDashboard from './Pages/Admin/AdminDashboard/AdminDashboard';
 import UserProfile from './Pages/User/UserProfile/UserProfile';
 import UserLoginAuth from './Components/Private/UserLoginAuth';
 import UserAuth from './Components/Private/userAuth';
 import NotFound from './Pages/NotFound/NotFound';
+import UserViewPage from './Pages/UserViewPage/UserViewPage';
 const App = () => {
   return (
     <Router>
@@ -32,7 +34,8 @@ const App = () => {
 
         {/* admin sign in */}
         <Route path='admin/signin' element={<AdminSignIn/>}/>
-
+        <Route path='admin/dashboard' element={<AdminDashboard/>}/>
+        <Route path='admin/viewuser/:id' element={<UserViewPage/>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
     </Router>
