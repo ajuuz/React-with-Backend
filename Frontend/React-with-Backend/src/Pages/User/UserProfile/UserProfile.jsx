@@ -139,6 +139,7 @@ const UserProfile = () => {
               imagePopupRef={imagePopupRef}
               currentUser={currentUser}
               closeImagePopup={setImagePopup}
+              role="user"
             />
           )}
 

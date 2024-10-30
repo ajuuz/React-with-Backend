@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState={
     currentAdmin : localStorage.getItem('adminInfo')
     ? JSON.parse(localStorage.getItem('adminInfo'))
-    :null
+    :null,
+    
 }
 const adminSlice = createSlice({
     name:"admin",
@@ -16,6 +17,12 @@ const adminSlice = createSlice({
         AdminLogout:(state)=>{
             state.currentAdmin=null;
             localStorage.removeItem('adminInfo');
+        },
+        increment:(state)=>{
+            state.count++;
+        },
+        decrement:(state)=>{
+            state.count--;
         }
     }
 })

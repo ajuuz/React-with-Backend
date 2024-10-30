@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const EditImage = ({ imagePopupRef,currentUser,closeImagePopup }) => {
+const EditImage = ({ imagePopupRef,currentUser,closeImagePopup,role }) => {
   const [error, setError] = useState(null);
   const [image, setImage] = useState(null);
+  console.log(role)
     const navigate = useNavigate()
   const handleChange = (e) => {
     setImage(e.target.files[0]);
@@ -13,22 +14,26 @@ const EditImage = ({ imagePopupRef,currentUser,closeImagePopup }) => {
   async function uploadImage() {
     const formData = new FormData();
     formData.append("image", image);
-
+    console.log("image upload 1")
     try {
-      const res = await fetch("/api/user/upload", {
+      
+      console.log("image upload 2")
+      const res = await fetch(`/api/user/upload`, {
         method: "POST",
         body: formData,
       });
       const data = await res.json();
+      console.log(data)
       if (res.ok) {
         console.log(data.message);
         return { success: true, imagePath: data.filePath };
       } else {
-        console.error("Image upload failed:", data.error);
+        console.error("Image upload failed: ", data.error);
         return { success: false, error: data.message };
       }
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.log("image upload error")
+      console.error("Error uploading image: ", error);
       return { success: false, error: "Image upload failed" };
     }
   }
@@ -41,7 +46,7 @@ const EditImage = ({ imagePopupRef,currentUser,closeImagePopup }) => {
     try{
         const imageUploadResult = await uploadImage();
         
-        const res = await fetch(`/api/user/editimage/${currentUser._id}`,{
+        const res = await fetch(`/api/${role}/editimage/${currentUser._id}`,{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'
@@ -49,7 +54,7 @@ const EditImage = ({ imagePopupRef,currentUser,closeImagePopup }) => {
             body:JSON.stringify({imagePath:imageUploadResult.imagePath})
         })
         const data = await res.json();
-        navigate("/user/profile",{state:data.message});
+        navigate(role==="user"?'/user/profile':`/admin/viewuser/${currentUser._id}`,{state:data.message});
         closeImagePopup(false)
     }
     catch(error){

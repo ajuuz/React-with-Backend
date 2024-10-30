@@ -5,6 +5,7 @@ const UserSignUp = () => {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [fieldErrors,setFieldErrors] = useState({})
 
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
@@ -44,11 +45,54 @@ const UserSignUp = () => {
     }
   }
 
+
+  const validateForm = () => {
+    let formErrors = {};
+
+    if (!formData.email) {
+      formErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      formErrors.email = "Email is not valid";
+    }
+
+    if (!formData.name) {
+      formErrors.name = "Name is required";
+    } else if (!/^[A-Za-z\s]{2,}$/.test(formData.name)) {
+      formErrors.name = "Name must contain only letters and at least 2 characters.";
+    }
+
+    if (!formData.password) {
+      formErrors.password = "Password is required";
+    } else if (formData.password.length < 8) {
+      formErrors.password = "Password must be at least 8 characters.";
+    }
+    if(!formData.username){
+      formErrors.username = "username is required"
+    }
+    if (!formData.phone) {
+      formErrors.phone = "Phone number is required";
+    } else if (!/^\d{10}$/.test(formData.phone)) {
+      formErrors.phone = "Phone number must be 10 digits.";
+    }
+
+    
+
+    return formErrors;
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-    setLoading(true);
     setError(false);
+    const validation = validateForm();
+    if(Object.keys(validation).length>0) {
+      
+      console.log(validation)
+      setFieldErrors(validation)
+      return
+    }
+    setLoading(true);
     try {
       if (image) {
         const imageUploadResult = await uploadImage();
@@ -96,6 +140,7 @@ const UserSignUp = () => {
             className="bg-slate-100 p-3 rounded-lg"
             onChange={handleChange}
           />
+          {fieldErrors.name && <p className="text-red-700">{fieldErrors.name}</p>}
           <input
             type="text"
             placeholder="Enter your Email"
@@ -103,6 +148,7 @@ const UserSignUp = () => {
             className="bg-slate-100 p-3 rounded-lg"
             onChange={handleChange}
           />
+          {fieldErrors.email && <p className="text-red-700">{fieldErrors.email}</p>}
           <input
             type="number"
             placeholder="Enter your Phone number"
@@ -110,6 +156,7 @@ const UserSignUp = () => {
             className="bg-slate-100 p-3 rounded-lg"
             onChange={handleChange}
           />
+           {fieldErrors.phone && <p className="text-red-700">{fieldErrors.phone}</p>}
           <input
             type="text"
             placeholder="Enter a username"
@@ -117,6 +164,7 @@ const UserSignUp = () => {
             className="bg-slate-100 p-3 rounded-lg"
             onChange={handleChange}
           />
+          {fieldErrors.username && <p className="text-red-700">{fieldErrors.username}</p>}
           <input
             type="password"
             placeholder="Enter your password"
@@ -124,6 +172,7 @@ const UserSignUp = () => {
             className="bg-slate-100 p-3 rounded-lg"
             onChange={handleChange}
           />
+       {fieldErrors.password && <p className="text-red-700">{fieldErrors.password}</p>}
           <input
             type="file"
             id="profilePicture"

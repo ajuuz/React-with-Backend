@@ -63,7 +63,7 @@ exports.singin = async (req,res,next)=>{
 
 exports.ImageUploads = (req,res)=>{
     try{
-        
+        console.log("user req file is this "+req.file)
         if(!req.file)
         {
             return res.status(400).json({message:'No file uploaded'});

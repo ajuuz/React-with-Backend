@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/signup',UserController.signup)
 router.post('/signin',UserController.singin)
-router.post('/upload',authMiddleware.verifyUser,upload.single('image'),UserController.ImageUploads)
+router.post('/upload',upload.single('image'),UserController.ImageUploads)
 router.get('/getuser/:id',authMiddleware.verifyUser,UserController.getuser)
 router.post('/edituser/:id/:key',authMiddleware.verifyUser,UserController.edituser)
 router.post('/passwordchange/:id',authMiddleware.verifyUser,UserController.passwordcheck);

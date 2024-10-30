@@ -77,12 +77,7 @@ const AdminSignIn = () => {
             {loading ? "loading..." : "Sign In"}
           </button>
         </form>
-        <div className="flex gap-2 mt-5">
-          <p>Dont have an Account ?</p>
-          <Link to="/user/signup">
-            <span className="text-blue-500">Sign Up</span>
-          </Link>
-        </div>
+        
         <p className="text-red-500 font-bold mt-3 text-center">
           {error ? error : ""}
         </p>

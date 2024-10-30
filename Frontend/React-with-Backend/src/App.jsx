@@ -19,6 +19,9 @@ import UserLoginAuth from './Components/Private/UserLoginAuth';
 import UserAuth from './Components/Private/userAuth';
 import NotFound from './Pages/NotFound/NotFound';
 import UserViewPage from './Pages/UserViewPage/UserViewPage';
+import AdminLoginAuth from './Components/Private/AdminLoginAuth';
+import AdminAuth from './Components/Private/AdminAuth';
+
 const App = () => {
   return (
     <Router>
@@ -33,10 +36,12 @@ const App = () => {
         <Route path='user/profile' element={<UserAuth><UserProfile/></UserAuth>}/>
 
         {/* admin sign in */}
-        <Route path='admin/signin' element={<AdminSignIn/>}/>
-        <Route path='admin/dashboard' element={<AdminDashboard/>}/>
-        <Route path='admin/viewuser/:id' element={<UserViewPage/>}/>
+        <Route path='admin/signin' element={<AdminLoginAuth><AdminSignIn/></AdminLoginAuth>}/>
+        <Route path='admin/dashboard' element={<AdminAuth><AdminDashboard/></AdminAuth>}/>
+        <Route path='admin/viewuser/:id' element={<AdminAuth><UserViewPage/></AdminAuth>}/>
         <Route path='*' element={<NotFound/>}/>
+
+        
       </Routes>
     </Router>
   )

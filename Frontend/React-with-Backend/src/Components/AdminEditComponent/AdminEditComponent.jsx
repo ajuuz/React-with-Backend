@@ -1,14 +1,26 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect, useLayoutEffect} from 'react'
 import './AdminEditComponent.css';
-const AdminEditComponent = () => {
+import { useNavigate } from 'react-router-dom';
+const AdminEditComponent = ({userDetails,closeEditBox}) => {
+    console.log(userDetails)
+    const [UpdateMsg,setUpdateMsg]=useState(null);
+    const [error,setError]= useState(null)
+    const navigate=useNavigate()
     const [formData, setFormData] = useState({
-        image: '',
-        name: '',
-        email: '',
-        username: '',
-        phone: '',
-        password: ''
+        name: "",
+        email: "",
+        username: "",
+        phone: "",
     });
+
+    useEffect(()=>{
+            setFormData({
+                name:userDetails.name,
+                email:userDetails.email,
+                username:userDetails.email,
+                phone:userDetails.phone,
+            })
+    },[userDetails])
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -16,15 +28,38 @@ const AdminEditComponent = () => {
         
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit =async (e) => {
         e.preventDefault();
         // Handle form submission logic here
-        console.log('Form submitted:', formData);
-        alert("Form submitted!");
+        try{
+            const res = await fetch(`/api/admin/useredit/${userDetails._id}`,{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(formData)
+            });
+            const data = await res.json();
+            if(data.success===false)
+            {
+             setError(data.message);
+             setTimeout(()=>{
+                setError(null)
+             },3000)
+             return;   
+            }
+            console.log(data.message);
+            setUpdateMsg(data.message);
+            navigate(`/admin/viewuser/${userDetails._id}`,{state:data.message})
+            closeEditBox(false);
+        }
+        catch(error){
+            console.log("update error when admin edits")
+        }
     };
 
     return (
-        <div className="user-form w-[500px]">
+        <div className="user-form w-[500px] mt-24">
             <h1>User Details Form</h1>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -75,18 +110,7 @@ const AdminEditComponent = () => {
                         required
                     />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        placeholder="Enter your password"
-                        required
-                    />
-                </div>
+                {error && <p className='text-red-500'>{error}</p>}
                 <button type="submit" className="submit-button">Submit</button>
             </form>
         </div>
