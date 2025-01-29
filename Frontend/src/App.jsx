@@ -16,7 +16,7 @@ import AdminSignIn from './Pages/Admin/AdminSignIn/AdminSignIn';
 import AdminDashboard from './Pages/Admin/AdminDashboard/AdminDashboard';
 import UserProfile from './Pages/User/UserProfile/UserProfile';
 import UserLoginAuth from './Components/Private/UserLoginAuth';
-import UserAuth from './Components/Private/userAuth';
+import UserAuth from './Components/Private/UserAuth';
 import NotFound from './Pages/NotFound/NotFound';
 import UserViewPage from './Pages/UserViewPage/UserViewPage';
 import AdminLoginAuth from './Components/Private/AdminLoginAuth';
