@@ -41,10 +41,9 @@ const App = () => {
         <Route path='admin/viewuser/:id' element={<AdminAuth><UserViewPage/></AdminAuth>}/>
         <Route path='*' element={<NotFound/>}/>
 
-        
       </Routes>
     </Router>
   )
-}
+}  
 
 export default App;
