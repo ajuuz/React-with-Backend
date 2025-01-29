@@ -85,11 +85,14 @@ const handleDelete=async(e,id)=>{
         {addUserComponent && <AdminAddUser setAddUserComponent={setAddUserComponent}/>}
         {allUsers.map((user,index) => (
           <div className="card relative" onClick={()=>setClickToChoose(index)}>
-            {clickToChoose===index ?  <div className="absolute bg-black opacity-60 w-[100%] h-[100%] flex items-center justify-center gap-5 text-white ">
+            {clickToChoose===index 
+            ?  <div className="absolute bg-black opacity-60 w-[100%] h-[100%] flex items-center justify-center gap-5 text-white ">
                 <button onClick={()=>handleViewUser(user._id)} className="px-5 border border-white h-[10%] font-mono font-bold hover:text-black hover:bg-white transition-all duration-200">view</button>
                 <button onClick={(e)=>handleDelete(e,user._id)} className="px-5 border border-white h-[10%] font-mono font-bold hover:text-black hover:bg-white transition-all duration-200">delete</button>
                 <button onClick={handleClose} className="px-5 border border-white h-[10%] font-mono font-bold hover:text-black hover:bg-white transition-all duration-200">x</button>
-                </div>:null}
+                </div>
+                :null
+                }
            
             <img
               src={

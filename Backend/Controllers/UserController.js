@@ -101,7 +101,6 @@ exports.edituser =async (req,res)=>{
     const value= req.body.edittedFieldData;
     try{
       const updatedUser=await User.updateOne({_id:id},{$set:{[key]:value}});
-      console.log(updatedUser);
       res.status(200).json({message:`${key} updated successfully`})
     }
     catch(error){

@@ -18,7 +18,7 @@ const UserSignUp = () => {
   };
 
   const handleImageChange = (e) => {
-    // console.log(e.target.files)
+    console.log(e.target.files)
     setImage(e.target.files[0]);
   };
 
@@ -57,7 +57,7 @@ const UserSignUp = () => {
 
     if (!formData.name) {
       formErrors.name = "Name is required";
-    } else if (!/^[A-Za-z\s]{2,}$/.test(formData.name)) {
+    } else if (!/^[A-Za-z\s]{3,20}$/.test(formData.name)) {
       formErrors.name = "Name must contain only letters and at least 2 characters.";
     }
 

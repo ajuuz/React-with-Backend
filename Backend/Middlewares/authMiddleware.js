@@ -8,10 +8,10 @@ exports.verifyUser = async (req,res,next)=>{
     if(token)
     {
         try{
+            console.log("auth middle ware",jwt.verify(token,process.env.JWT_SECRET))
+
             const decode = jwt.verify(token,process.env.JWT_SECRET);
-            console.log(decode);
             const validUser = await User.findById(decode.id).select('-password')
-            console.log(validUser)
             if(!validUser) return res.status(401).json({message:"unauthorized User"})
             next();
         }
@@ -30,6 +30,7 @@ exports.verifyAdmin=async(req,res,next)=>{
     const token = req.cookies.adminAccess_token;
     if(token){
         try{
+            console.log(jwt.verify(token,process.env.JWT_SECRET))
             const decode = jwt.verify(token,process.env.JWT_SECRET);
             console.log(decode);
             const user = await Admin.findById(decode.id).select('-password')
