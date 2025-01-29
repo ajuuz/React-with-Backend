@@ -9,7 +9,7 @@ const path=require('node:path')
 
 exports.signup=async (req,res,next)=>{ 
     const {name,email,phone,username,password,imagePath} = req.body;
-   
+   console.log(email)
     // hashing the password
     const hashedPassword = bcryptjs.hashSync(password,10);
     // saving the User
